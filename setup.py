@@ -7,23 +7,22 @@ setup(
     author='Matt Grayson',
     author_email='mattgrayson@uthsc.edu',
     url='http://library.uthsc.edu',
-    description='Simple wrapper around Bio.Entrez for searching '
-                'and retrieving articles from PubMed via the Entrez '
-                'Programming Utilities.',
+    description='Simple utility for searching and retrieving articles from '
+                'PubMed via the Entrez Programming Utilities.',
     long_description="""\
 pubmed.py
 -----
-Simple wrapper around Bio.Entrez for searching and retrieving 
-articles from PubMed via the Entrez Programming Utilities 
-<http://eutils.ncbi.nlm.nih.gov/>.
+Simple utility for searching and retrieving articles from PubMed via the 
+Entrez Programming Utilities <http://eutils.ncbi.nlm.nih.gov/>.
 
 Required: Python 2.5 or later
-Required: biopython <http://biopython.org/>
+Required: httplib2
+Required: lxml
 -----
 
 To install:
 $ python setup.py install
 """,
-    version='1.0',
+    version='0.1',
     py_modules=['pubmed'],
 )
