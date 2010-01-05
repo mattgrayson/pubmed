@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<!DOCTYPE eSearchResult PUBLIC "-//NLM//DTD eSearchResult, 11 May 2002//EN" "http://www.ncbi.nlm.nih.gov/entrez/query/DTD/eSearch_020511.dtd">
+<eSearchResult><Count>3363</Count><RetMax>20</RetMax><RetStart>0</RetStart><QueryKey>1</QueryKey><WebEnv>NCID_1_150263976_130.14.22.148_9001_1262698699</WebEnv><IdList>
+		<Id>20044836</Id>
+		<Id>20042659</Id>
+		<Id>20042652</Id>
+		<Id>20039576</Id>
+		<Id>20028457</Id>
+		<Id>20025893</Id>
+		<Id>20021566</Id>
+		<Id>20020487</Id>
+		<Id>20018857</Id>
+		<Id>20018481</Id>
+		<Id>20018369</Id>
+		<Id>20013340</Id>
+		<Id>20010620</Id>
+		<Id>20009786</Id>
+		<Id>20008643</Id>
+		<Id>19999910</Id>
+		<Id>19996803</Id>
+		<Id>19995133</Id>
+		<Id>19966858</Id>
+		<Id>19966053</Id>
+	</IdList><TranslationSet/><TranslationStack>   <TermSet>    <Term>"ut memphis"[Affiliation]</Term>    <Field>Affiliation</Field>    <Count>1</Count>    <Explode>Y</Explode>   </TermSet>   <TermSet>    <Term>"university of Tennessee Memphis"[Affiliation]</Term>    <Field>Affiliation</Field>    <Count>405</Count>    <Explode>Y</Explode>   </TermSet>   <OP>OR</OP>   <TermSet>    <Term>"university of Tennessee health science center"[Affiliation]</Term>    <Field>Affiliation</Field>    <Count>2247</Count>    <Explode>Y</Explode>   </TermSet>   <OP>OR</OP>   <TermSet>    <Term>"uthsc"[Affiliation]</Term>    <Field>Affiliation</Field>    <Count>45</Count>    <Explode>Y</Explode>   </TermSet>   <OP>OR</OP>   <TermSet>    <Term>"University of Tennessee College of Medicine"[Affiliation]</Term>    <Field>Affiliation</Field>    <Count>670</Count>    <Explode>Y</Explode>   </TermSet>   <OP>OR</OP>  </TranslationStack><QueryTranslation>"ut memphis"[Affiliation] OR "university of Tennessee Memphis"[Affiliation] OR "university of Tennessee health science center"[Affiliation] OR "uthsc"[Affiliation] OR "University of Tennessee College of Medicine"[Affiliation]</QueryTranslation></eSearchResult>

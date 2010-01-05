@@ -1,0 +1,560 @@
+<?xml version="1.0"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2009//EN" "http://www.ncbi.nlm.nih.gov/entrez/query/DTD/pubmed_090101.dtd">
+<PubmedArticleSet>
+  <PubmedArticle>
+      <MedlineCitation Owner="NLM" Status="MEDLINE">
+          <PMID>1906085</PMID>
+          <DateCreated>
+              <Year>1991</Year>
+              <Month>08</Month>
+              <Day>12</Day>
+          </DateCreated>
+          <DateCompleted>
+              <Year>1991</Year>
+              <Month>08</Month>
+              <Day>12</Day>
+          </DateCompleted>
+          <DateRevised>
+              <Year>2007</Year>
+              <Month>11</Month>
+              <Day>14</Day>
+          </DateRevised>
+          <Article PubModel="Print">
+              <Journal>
+                  <ISSN IssnType="Print">0022-2275</ISSN>
+                  <JournalIssue CitedMedium="Print">
+                      <Volume>32</Volume>
+                      <Issue>3</Issue>
+                      <PubDate>
+                          <Year>1991</Year>
+                          <Month>Mar</Month>
+                      </PubDate>
+                  </JournalIssue>
+                  <Title>Journal of lipid research</Title>
+                  <ISOAbbreviation>J. Lipid Res.</ISOAbbreviation>
+              </Journal>
+              <ArticleTitle>Effects of thyroid status and fasting on hepatic metabolism of apolipoprotein A-I.</ArticleTitle>
+              <Pagination>
+                  <MedlinePgn>395-405</MedlinePgn>
+              </Pagination>
+              <Abstract>
+                  <AbstractText>Metabolism of apolipoprotein (apo)A-I was studied in normal and chow-fed hyperthyroid rats, in 24-h fasted untreated male rats, and in rats after thyroparathyroidectomy (TXPTX). Rats were made hyperthyroid by administration of T3 (9.6 micrograms/day) or T4 (30 micrograms/day) with an Alzet osmotic minipump. Hyperthyroidism produced a similar two- to threefold elevation in plasma levels of apoA-I in male or female animals. During treatment with T3, plasma levels of T3 ranged from 200 to 400 ng/dl and did not correlate with plasma apoA-I levels. The net mass secretion and synthesis ([3H]leucine incorporation) of apoA-I by perfused livers from male hyperthyroid rats was elevated, while secretion of albumin was not different than that of euthyroid rats. Furthermore, the incorporation of [3H]leucine into total perfusate and hepatic protein was not altered by hyperthyroidism. The effect of thyroid hormone on apoA-I synthesis, therefore, does not appear to be a general effect on protein synthesis. After longer periods of treatment (28 days) with T3 (9.6 micrograms/day), hepatic apoA-I production decreased from that observed after 7 or 14 days of treatment, yet plasma apoA-I concentrations remained elevated. Plasma T3 decreased from 100 ng/dl to 40 ng/dl, in the hypothyroid rat resulting from TXPTX, but the plasma concentration of apoA-I did not change during the 2-week experimental period. The net secretion of apoA-I by livers from hypothyroid animals was depressed and albumin was uneffected compared to the euthyroid. Overnight fasting of euthyroid rats did not alter hepatic apoA-I secretion or plasma apoA-I levels, although under fasting conditions we had reported that hepatic output of apoB and E of VLDL is depressed. The addition of oleic acid to the perfusion medium, sufficient to stimulate VLDL production, did not affect net hepatic secretion of apoA-I by livers from euthyroid, hyperthyroid, or hypothyroid rats. In summary, hepatic synthesis of apoA-I appears to be controlled independently of other apo-lipoproteins and secretory proteins (albumin). Hepatic apoA-I synthesis is sensitive to thyroid status, increased in the hyperthyroid and decreased in the hypothyroid state. The specific stimulation of hepatic synthesis and secretion of apoA-I in the hyperthyroid state, however, tends to normalize over an extended period, perhaps from compensatory effects of a hormonal nature.</AbstractText>
+              </Abstract>
+              <Affiliation>Department of Pharmacology, University of Tennessee-Memphis, Memphis 38163.</Affiliation>
+              <AuthorList CompleteYN="Y">
+                  <Author ValidYN="Y">
+                      <LastName>Wilcox</LastName>
+                      <ForeName>H G</ForeName>
+                      <Initials>HG</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Frank</LastName>
+                      <ForeName>R A</ForeName>
+                      <Initials>RA</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Heimberg</LastName>
+                      <ForeName>M</ForeName>
+                      <Initials>M</Initials>
+                  </Author>
+              </AuthorList>
+              <Language>eng</Language>
+              <GrantList CompleteYN="Y">
+                  <Grant>
+                      <GrantID>HL-27850</GrantID>
+                      <Acronym>HL</Acronym>
+                      <Agency>NHLBI NIH HHS</Agency>
+                      <Country>United States</Country>
+                  </Grant>
+              </GrantList>
+              <PublicationTypeList>
+                  <PublicationType>Journal Article</PublicationType>
+                  <PublicationType>Research Support, Non-U.S. Gov't</PublicationType>
+                  <PublicationType>Research Support, U.S. Gov't, P.H.S.</PublicationType>
+              </PublicationTypeList>
+          </Article>
+          <MedlineJournalInfo>
+              <Country>UNITED STATES</Country>
+              <MedlineTA>J Lipid Res</MedlineTA>
+              <NlmUniqueID>0376606</NlmUniqueID>
+              <ISSNLinking>0022-2275</ISSNLinking>
+          </MedlineJournalInfo>
+          <ChemicalList>
+              <Chemical>
+                  <RegistryNumber>0</RegistryNumber>
+                  <NameOfSubstance>Apolipoprotein A-I</NameOfSubstance>
+              </Chemical>
+              <Chemical>
+                  <RegistryNumber>0</RegistryNumber>
+                  <NameOfSubstance>Apolipoproteins A</NameOfSubstance>
+              </Chemical>
+              <Chemical>
+                  <RegistryNumber>0</RegistryNumber>
+                  <NameOfSubstance>Lipoproteins, HDL</NameOfSubstance>
+              </Chemical>
+              <Chemical>
+                  <RegistryNumber>0</RegistryNumber>
+                  <NameOfSubstance>Thyroid Hormones</NameOfSubstance>
+              </Chemical>
+              <Chemical>
+                  <RegistryNumber>6893-02-3</RegistryNumber>
+                  <NameOfSubstance>Triiodothyronine</NameOfSubstance>
+              </Chemical>
+          </ChemicalList>
+          <CitationSubset>IM</CitationSubset>
+          <CommentsCorrectionsList>
+              <CommentsCorrections RefType="ErratumIn">
+                  <RefSource>J Lipid Res 1991 May;32(5):886</RefSource>
+              </CommentsCorrections>
+          </CommentsCorrectionsList>
+          <MeshHeadingList>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Animals</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Apolipoprotein A-I</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Apolipoproteins A</DescriptorName>
+                  <QualifierName MajorTopicYN="N">blood</QualifierName>
+                  <QualifierName MajorTopicYN="Y">metabolism</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="Y">Fasting</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Female</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Hyperthyroidism</DescriptorName>
+                  <QualifierName MajorTopicYN="N">metabolism</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Kinetics</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Lipoproteins, HDL</DescriptorName>
+                  <QualifierName MajorTopicYN="N">metabolism</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Liver</DescriptorName>
+                  <QualifierName MajorTopicYN="Y">metabolism</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Male</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Rats</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Thyroid Gland</DescriptorName>
+                  <QualifierName MajorTopicYN="Y">physiology</QualifierName>
+                  <QualifierName MajorTopicYN="N">surgery</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Thyroid Hormones</DescriptorName>
+                  <QualifierName MajorTopicYN="N">physiology</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Thyroidectomy</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Triiodothyronine</DescriptorName>
+              </MeshHeading>
+          </MeshHeadingList>
+      </MedlineCitation>
+      <PubmedData>
+          <History>
+              <PubMedPubDate PubStatus="pubmed">
+                  <Year>1991</Year>
+                  <Month>3</Month>
+                  <Day>1</Day>
+              </PubMedPubDate>
+              <PubMedPubDate PubStatus="medline">
+                  <Year>1991</Year>
+                  <Month>3</Month>
+                  <Day>1</Day>
+                  <Hour>0</Hour>
+                  <Minute>1</Minute>
+              </PubMedPubDate>
+              <PubMedPubDate PubStatus="entrez">
+                  <Year>1991</Year>
+                  <Month>3</Month>
+                  <Day>1</Day>
+                  <Hour>0</Hour>
+                  <Minute>0</Minute>
+              </PubMedPubDate>
+          </History>
+          <PublicationStatus>ppublish</PublicationStatus>
+          <ArticleIdList>
+              <ArticleId IdType="pubmed">1906085</ArticleId>
+          </ArticleIdList>
+      </PubmedData>
+  </PubmedArticle>
+
+
+  <PubmedArticle>
+      <MedlineCitation Owner="NLM" Status="MEDLINE">
+          <PMID>1989324</PMID>
+          <DateCreated>
+              <Year>1991</Year>
+              <Month>02</Month>
+              <Day>27</Day>
+          </DateCreated>
+          <DateCompleted>
+              <Year>1991</Year>
+              <Month>02</Month>
+              <Day>27</Day>
+          </DateCompleted>
+          <DateRevised>
+              <Year>2007</Year>
+              <Month>11</Month>
+              <Day>14</Day>
+          </DateRevised>
+          <Article PubModel="Print">
+              <Journal>
+                  <ISSN IssnType="Print">0041-1345</ISSN>
+                  <JournalIssue CitedMedium="Print">
+                      <Volume>23</Volume>
+                      <Issue>1 Pt 2</Issue>
+                      <PubDate>
+                          <Year>1991</Year>
+                          <Month>Feb</Month>
+                      </PubDate>
+                  </JournalIssue>
+                  <Title>Transplantation proceedings</Title>
+                  <ISOAbbreviation>Transplant. Proc.</ISOAbbreviation>
+              </Journal>
+              <ArticleTitle>Improvement in autonomic function following combined pancreas-kidney transplantation.</ArticleTitle>
+              <Pagination>
+                  <MedlinePgn>1660-2</MedlinePgn>
+              </Pagination>
+              <Affiliation>Department of Surgery, University of Tennessee-Memphis.</Affiliation>
+              <AuthorList CompleteYN="Y">
+                  <Author ValidYN="Y">
+                      <LastName>Gaber</LastName>
+                      <ForeName>A O</ForeName>
+                      <Initials>AO</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Cardoso</LastName>
+                      <ForeName>S</ForeName>
+                      <Initials>S</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Pearson</LastName>
+                      <ForeName>S</ForeName>
+                      <Initials>S</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Abell</LastName>
+                      <ForeName>T</ForeName>
+                      <Initials>T</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Gaber</LastName>
+                      <ForeName>L</ForeName>
+                      <Initials>L</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Hathaway</LastName>
+                      <ForeName>D</ForeName>
+                      <Initials>D</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Alakkad</LastName>
+                      <ForeName>M</ForeName>
+                      <Initials>M</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Cromer</LastName>
+                      <ForeName>R</ForeName>
+                      <Initials>R</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Britt</LastName>
+                      <ForeName>L G</ForeName>
+                      <Initials>LG</Initials>
+                  </Author>
+              </AuthorList>
+              <Language>eng</Language>
+              <GrantList CompleteYN="Y">
+                  <Grant>
+                      <GrantID>SRR00211-26</GrantID>
+                      <Acronym>RR</Acronym>
+                      <Agency>NCRR NIH HHS</Agency>
+                      <Country>United States</Country>
+                  </Grant>
+              </GrantList>
+              <PublicationTypeList>
+                  <PublicationType>Journal Article</PublicationType>
+                  <PublicationType>Research Support, Non-U.S. Gov't</PublicationType>
+                  <PublicationType>Research Support, U.S. Gov't, P.H.S.</PublicationType>
+              </PublicationTypeList>
+          </Article>
+          <MedlineJournalInfo>
+              <Country>UNITED STATES</Country>
+              <MedlineTA>Transplant Proc</MedlineTA>
+              <NlmUniqueID>0243532</NlmUniqueID>
+              <ISSNLinking>0041-1345</ISSNLinking>
+          </MedlineJournalInfo>
+          <CitationSubset>IM</CitationSubset>
+          <MeshHeadingList>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Adult</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Autonomic Nervous System</DescriptorName>
+                  <QualifierName MajorTopicYN="Y">physiology</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Diabetes Mellitus, Type 1</DescriptorName>
+                  <QualifierName MajorTopicYN="N">surgery</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Diabetic Neuropathies</DescriptorName>
+                  <QualifierName MajorTopicYN="N">physiopathology</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Female</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Heart</DescriptorName>
+                  <QualifierName MajorTopicYN="N">physiology</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Humans</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Kidney Transplantation</DescriptorName>
+                  <QualifierName MajorTopicYN="Y">physiology</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Male</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Pancreas Transplantation</DescriptorName>
+                  <QualifierName MajorTopicYN="Y">physiology</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Prospective Studies</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Stomach</DescriptorName>
+                  <QualifierName MajorTopicYN="N">physiology</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Uremia</DescriptorName>
+                  <QualifierName MajorTopicYN="N">complications</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Vasomotor System</DescriptorName>
+                  <QualifierName MajorTopicYN="N">physiology</QualifierName>
+              </MeshHeading>
+          </MeshHeadingList>
+      </MedlineCitation>
+      <PubmedData>
+          <History>
+              <PubMedPubDate PubStatus="pubmed">
+                  <Year>1991</Year>
+                  <Month>2</Month>
+                  <Day>1</Day>
+              </PubMedPubDate>
+              <PubMedPubDate PubStatus="medline">
+                  <Year>1991</Year>
+                  <Month>2</Month>
+                  <Day>1</Day>
+                  <Hour>0</Hour>
+                  <Minute>1</Minute>
+              </PubMedPubDate>
+              <PubMedPubDate PubStatus="entrez">
+                  <Year>1991</Year>
+                  <Month>2</Month>
+                  <Day>1</Day>
+                  <Hour>0</Hour>
+                  <Minute>0</Minute>
+              </PubMedPubDate>
+          </History>
+          <PublicationStatus>ppublish</PublicationStatus>
+          <ArticleIdList>
+              <ArticleId IdType="pubmed">1989324</ArticleId>
+          </ArticleIdList>
+      </PubmedData>
+  </PubmedArticle>
+
+
+  <PubmedArticle>
+      <MedlineCitation Owner="NLM" Status="MEDLINE">
+          <PMID>1994597</PMID>
+          <DateCreated>
+              <Year>1991</Year>
+              <Month>03</Month>
+              <Day>21</Day>
+          </DateCreated>
+          <DateCompleted>
+              <Year>1991</Year>
+              <Month>03</Month>
+              <Day>21</Day>
+          </DateCompleted>
+          <DateRevised>
+              <Year>2004</Year>
+              <Month>11</Month>
+              <Day>17</Day>
+          </DateRevised>
+          <Article PubModel="Print">
+              <Journal>
+                  <ISSN IssnType="Print">0364-2313</ISSN>
+                  <JournalIssue CitedMedium="Print">
+                      <Volume>15</Volume>
+                      <Issue>1</Issue>
+                      <PubDate>
+                          <MedlineDate>1991 Jan-Feb</MedlineDate>
+                      </PubDate>
+                  </JournalIssue>
+                  <Title>World journal of surgery</Title>
+                  <ISOAbbreviation>World J Surg</ISOAbbreviation>
+              </Journal>
+              <ArticleTitle>Cervicothoracic arterial injuries: recommendations for diagnosis and management.</ArticleTitle>
+              <Pagination>
+                  <MedlinePgn>134-9; discussion 139-40</MedlinePgn>
+              </Pagination>
+              <Abstract>
+                  <AbstractText>Management of arterial injuries at the thoracic outlet and neck presents a major challenge to the trauma surgeon: hemorrhagic shock, neurologic deficit, and limb loss are the serious sequelae. Over a 13-year period, 118 patients with injuries to the innominate, carotid, subclavian, and axillary arteries were evaluated. Most injuries were penetrating (78%). Half of the patients were diagnosed by physical examination and half by angiography. Patients were treated by either primary repair (35%), interposition graft (31%), ligation (8%), or anticoagulation (26%). Two patients required amputations (1 digit, 1 above elbow). Overall mortality was 14%, with 5% due to consequences of hemorrhagic shock, 7% due to cerebral ischemia, and 2% due to other causes. Claviculectomy, median sternotomy, and trap door incisions were routinely used for proximal vascular control and repair. We conclude that liberal use of angiography is indicated in stable patients for penetrating wounds near major arteries, and for blunt injuries associated with neurologic deficits unexplained by computed tomography. Patients with obvious arterial injury should have immediate exploration. Extensile exposure is mandatory for appropriate management. Blunt carotid dissections are generally best managed non-operatively with anticoagulation.</AbstractText>
+              </Abstract>
+              <Affiliation>Department of Surgery, Presley Regional Trauma Center, University of Tennessee-Memphis 38163.</Affiliation>
+              <AuthorList CompleteYN="Y">
+                  <Author ValidYN="Y">
+                      <LastName>George</LastName>
+                      <ForeName>S M</ForeName>
+                      <Initials>SM</Initials>
+                      <Suffix>Jr</Suffix>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Croce</LastName>
+                      <ForeName>M A</ForeName>
+                      <Initials>MA</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Fabian</LastName>
+                      <ForeName>T C</ForeName>
+                      <Initials>TC</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Mangiante</LastName>
+                      <ForeName>E C</ForeName>
+                      <Initials>EC</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Kudsk</LastName>
+                      <ForeName>K A</ForeName>
+                      <Initials>KA</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Voeller</LastName>
+                      <ForeName>G R</ForeName>
+                      <Initials>GR</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Pate</LastName>
+                      <ForeName>J W</ForeName>
+                      <Initials>JW</Initials>
+                  </Author>
+              </AuthorList>
+              <Language>eng</Language>
+              <PublicationTypeList>
+                  <PublicationType>Journal Article</PublicationType>
+              </PublicationTypeList>
+          </Article>
+          <MedlineJournalInfo>
+              <Country>UNITED STATES</Country>
+              <MedlineTA>World J Surg</MedlineTA>
+              <NlmUniqueID>7704052</NlmUniqueID>
+              <ISSNLinking>0364-2313</ISSNLinking>
+          </MedlineJournalInfo>
+          <CitationSubset>IM</CitationSubset>
+          <MeshHeadingList>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Adolescent</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Adult</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Aged</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Axillary Artery</DescriptorName>
+                  <QualifierName MajorTopicYN="Y">injuries</QualifierName>
+                  <QualifierName MajorTopicYN="N">radiography</QualifierName>
+                  <QualifierName MajorTopicYN="N">surgery</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Brachiocephalic Trunk</DescriptorName>
+                  <QualifierName MajorTopicYN="Y">injuries</QualifierName>
+                  <QualifierName MajorTopicYN="N">radiography</QualifierName>
+                  <QualifierName MajorTopicYN="N">surgery</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Carotid Arteries</DescriptorName>
+                  <QualifierName MajorTopicYN="N">radiography</QualifierName>
+                  <QualifierName MajorTopicYN="N">surgery</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="Y">Carotid Artery Injuries</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Female</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Humans</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Male</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Middle Aged</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Subclavian Artery</DescriptorName>
+                  <QualifierName MajorTopicYN="Y">injuries</QualifierName>
+                  <QualifierName MajorTopicYN="N">radiography</QualifierName>
+                  <QualifierName MajorTopicYN="N">surgery</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Wounds and Injuries</DescriptorName>
+                  <QualifierName MajorTopicYN="N">radiography</QualifierName>
+                  <QualifierName MajorTopicYN="N">surgery</QualifierName>
+              </MeshHeading>
+          </MeshHeadingList>
+      </MedlineCitation>
+      <PubmedData>
+          <History>
+              <PubMedPubDate PubStatus="pubmed">
+                  <Year>1991</Year>
+                  <Month>1</Month>
+                  <Day>11</Day>
+                  <Hour>19</Hour>
+                  <Minute>15</Minute>
+              </PubMedPubDate>
+              <PubMedPubDate PubStatus="medline">
+                  <Year>2001</Year>
+                  <Month>3</Month>
+                  <Day>28</Day>
+                  <Hour>10</Hour>
+                  <Minute>1</Minute>
+              </PubMedPubDate>
+              <PubMedPubDate PubStatus="entrez">
+                  <Year>1991</Year>
+                  <Month>1</Month>
+                  <Day>11</Day>
+                  <Hour>19</Hour>
+                  <Minute>15</Minute>
+              </PubMedPubDate>
+          </History>
+          <PublicationStatus>ppublish</PublicationStatus>
+          <ArticleIdList>
+              <ArticleId IdType="pubmed">1994597</ArticleId>
+          </ArticleIdList>
+      </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>
