@@ -70,6 +70,7 @@ class PubMedEntrez(object):
     def fetch_batch(self, query_key, web_env, total):
         ret_position = 0
         ret_max = 500
+        total_found = int(total)
         results = []
         args = {
             'WebEnv': web_env,
@@ -78,7 +79,7 @@ class PubMedEntrez(object):
             'retmax': ret_max
         }
 
-        while args['retstart'] < total:
+        while args['retstart'] < total_found:
             raw = self._get(self.fetch_uri, args)
             #results += self.parse_fetch_results(raw)
             
