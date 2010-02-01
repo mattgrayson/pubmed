@@ -25,7 +25,7 @@ class PubMedEntrez(object):
     """    
     ENTREZ_BASE_URI = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
 
-    def __init__(self, email):        
+    def __init__(self, email):
         self.search_results = ''
         self.last_query = ''
         self.email_address = email
@@ -33,7 +33,11 @@ class PubMedEntrez(object):
         self.fetch_uri = '%s/efetch.fcgi?db=pubmed&retmode=xml&rettype=full&email=%s' % (self.ENTREZ_BASE_URI, email)
         self.conn = httplib2.Http()        
         
-    def _get(self, url, params=None):    
+    def _get(self, url, params=None):
+        """Convenience method for retrieving the resulting contents of a request 
+        to a given URL. If the params arg is a dict, it will be urlencoded and 
+        appended to the given URL.
+        """
         if params:
             encoded_params = urllib.urlencode(params)
             if '?' in url:
@@ -74,12 +78,18 @@ class PubMedEntrez(object):
             'retmax': ret_max
         }
 
-        while ret_position < total:
+        while args['retstart'] < total:
             raw = self._get(self.fetch_uri, args)
-            results += self.parse_fetch_results(raw)
-            ret_position += ret_max
+            #results += self.parse_fetch_results(raw)
+            
+            print 'tmp/%s_%s.xml' % (web_env, args['retstart'])
+            f = open('tmp/%s_%s.xml' % (web_env, args['retstart']), 'w')
+            f.write(raw)
+            f.close()
+            
+            args['retstart'] += ret_max
 
-        return results
+        #return results
     
     def parse_fetch_result(self, raw):
         xml_tree = etree.XML(raw)
