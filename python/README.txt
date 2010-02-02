@@ -1,9 +1,9 @@
-pubmed.py, v. 0.1
+pubmed.py, v. 0.2
 
 Simple utility for searching and retrieving articles from PubMed via the 
 Entrez Programming Utilities <http://eutils.ncbi.nlm.nih.gov/>.
 
-Copyright (c) 2009, Matt Grayson
+Copyright (c) 2009-2010, Matt Grayson
 
 -----
 

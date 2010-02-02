@@ -12,9 +12,9 @@ Required: lxml
 """
 
 __author__ = "Matt Grayson (mattgrayson@uthsc.edu)"
-__copyright__ = "Copyright 2009, Matt Grayson"
+__copyright__ = "Copyright 2009-2010, Matt Grayson"
 __license__ = "MIT"
-__version__ = "0.1"
+__version__ = "0.2"
 
 import httplib2
 import urllib
@@ -54,49 +54,48 @@ class PubMedEntrez(object):
     def search(self, query, autofetch=True, **kwargs):
         args = {'term': query}
         args.update(kwargs)
-        raw = self._get(self.search_uri, args)
+        raw = self._get(self.search_uri, args)        
         xml_tree = etree.XML(raw)
+        results = {
+            'total_found': int(xml_tree.findtext('Count')) if xml_tree.find('Count') is not None else 0,
+            'query_key': xml_tree.findtext('QueryKey') if xml_tree.find('QueryKey') is not None else '',
+            'web_env': xml_tree.findtext('WebEnv') if xml_tree.find('WebEnv') is not None else '',
+        }
+        
         if autofetch:
-            count = xml_tree.findtext('Count') if xml_tree.find('Count') is not None else 0
-            query_key = xml_tree.findtext('QueryKey') if xml_tree.find('QueryKey') is not None else ''
-            web_env = xml_tree.findtext('WebEnv') if xml_tree.find('WebEnv') is not None else ''
-            return self.fetch_batch(query_key, web_env, count)
+            results['articles'] = self.fetch_query_results(
+                results['query_key'], 
+                results['web_env'], 
+                results['total_found']
+            )
         else:
-            return {            
-                'count': xml_tree.findtext('Count') if xml_tree.find('Count') is not None else 0,
-                'ids': [e.text for e in xml_tree.findall('IdList/Id')]
-            }
+            results['pmids'] = [e.text for e in xml_tree.findall('IdList/Id')]
+            
+        return results
     
-    def fetch_batch(self, query_key, web_env, total):
-        ret_position = 0
-        ret_max = 500
-        total_found = int(total)
+    def fetch_query_results(self, query_key, web_env, total_found):
         results = []
         args = {
             'WebEnv': web_env,
             'query_key': query_key,
-            'retstart': ret_position,
-            'retmax': ret_max
+            'retstart': 0,
+            'retmax': 500
         }
 
         while args['retstart'] < total_found:
-            raw = self._get(self.fetch_uri, args)
-            #results += self.parse_fetch_results(raw)
+            print 'Fetching results %s - %s ...' % (args['retstart'], args['retstart']+args['retmax'])                
+            raw = self._get(self.fetch_uri, args)            
+            results += self.parse_fetch_result(raw)            
+            args['retstart'] += args['retmax']
             
-            print 'tmp/%s_%s.xml' % (web_env, args['retstart'])
-            f = open('tmp/%s_%s.xml' % (web_env, args['retstart']), 'w')
-            f.write(raw)
-            f.close()
-            
-            args['retstart'] += ret_max
-
-        #return results
+        return results
+        
     
     def parse_fetch_result(self, raw):
         xml_tree = etree.XML(raw)
         articles_list = []
         for article in xml_tree.findall('PubmedArticle'):
-            art_dict = {}
+            art_dict = {}            
             art_dict['pmid'] = article.findtext('.//PMID') if article.find('.//PMID') is not None else ''
             art_dict['title'] = article.findtext('.//Article/ArticleTitle') if article.find('.//Article/ArticleTitle') is not None else ''
             art_dict['authors'] = []
@@ -120,18 +119,19 @@ class PubMedEntrez(object):
             journal['issn_print'] = article.findtext('.//Article/Journal/ISSN[@IssnType="Print"]') if article.find('.//Article/Journal/ISSN[@IssnType="Print"]') is not None else ''                          
             art_dict['journal'] = journal
             
-            # Citation details
+            # Citation
+            # -- basic details
             citation = {}
             citation['pages'] = article.findtext('.//Article/Pagination/MedlinePgn') if article.find('.//Article/Pagination/MedlinePgn') is not None else ''  
             citation['volume'] = article.findtext('.//Article/Journal/JournalIssue/Volume') if article.find('.//Article/Journal/JournalIssue/Volume') is not None else ''  
             citation['issue'] = article.findtext('.//Article/Journal/JournalIssue/Issue') if article.find('.//Article/Journal/JournalIssue/Issue') is not None else ''  
-            # Citation pub date
+            # -- pub date
             citation['date'] = article.findtext('.//Article/Journal/JournalIssue/PubDate/Year') if article.find('.//Article/Journal/JournalIssue/PubDate/Year') is not None else ''
             citation['date'] = "%s %s" % (citation['date'], article.findtext('.//Article/Journal/JournalIssue/PubDate/Month')) if article.find('.//Article/Journal/JournalIssue/PubDate/Month') is not None else citation['date']
             citation['date'] = "%s %s" % (citation['date'], article.findtext('.//Article/Journal/JournalIssue/PubDate/Day')) if article.find('.//Article/Journal/JournalIssue/PubDate/Day') is not None else citation['date']
             art_dict['citation'] = citation
             
-            # Mesh headings
+            # MeSH headings
             art_dict['subjects'] = []
             for subj in article.findall('.//MeshHeadingList/MeshHeading'):
                 desc_name = subj.findtext('DescriptorName') if subj.find('DescriptorName') is not None else ''
@@ -143,6 +143,10 @@ class PubMedEntrez(object):
                     qual_is_major = True if qual.get('MajorTopicYN') == 'Y' else False
                     art_dict['subjects'].append({'name': "%s/%s" % (desc_name,qual_name), 'is_major': qual_is_major})
             
+            # Cache raw XML string
+            art_dict['raw'] = etree.tostring(article)
+            
             articles_list.append(art_dict)
+            
         return articles_list
     
