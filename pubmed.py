@@ -106,10 +106,15 @@ class PubMedEntrez(object):
                 elif auth.find('ForeName') is not None:
                     auth_str = "%s %s" % (auth_str, auth.findtext('ForeName'))
                 art_dict['authors'].append(auth_str)
-            art_dict['affiliations'] = article.findtext('.//Article/Affiliation') if article.find('.//Article/Affiliation') is not None else ''  
+            art_dict['affiliation'] = article.findtext('.//Article/Affiliation') if article.find('.//Article/Affiliation') is not None else ''  
+            
             art_dict['abstract'] = article.findtext('.//Article/Abstract/AbstractText') if article.find('.//Article/Abstract/AbstractText') is not None else ''  
+            art_dict['abstract_copyright'] = article.findtext('.//Article/Abstract/CopyrightInformation') if article.find('.//Article/Abstract/CopyrightInformation') is not None else ''  
+            
             art_dict['medline_status'] = article.find('MedlineCitation').get('Status') if article.find('MedlineCitation').get('Status') is not None else ''
             art_dict['pubmed_status'] = article.findtext('.//PubmedData/PublicationStatus') if article.find('.//PubmedData/PublicationStatus') is not None else ''
+            #for entrez_date in article.findall('.//PubmedData/History/PubMedPubDate[@PubStatus="entrez"]'):
+            # art_dict['entrez_date'] = '...'
             
             # Journal details
             journal = {}

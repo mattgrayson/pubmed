@@ -19,7 +19,7 @@ OR ("ut college of medicine"[Affiliation] AND "memphis"[Affiliation]) \
 OR ("ut college of medicine"[Affiliation] AND "tennessee"[Affiliation]) \
 OR ("utmem"[Affiliation] AND "tennessee"[Affiliation]) \
 OR ("uthsc"[Affiliation] AND "tennessee"[Affiliation])'
-
+print QUERY
 #pme = PubMedEntrez('test@test.edu')
 #articles = pme.search(QUERY)
  
