@@ -63,26 +63,30 @@ class PubMedEntrez(object):
         }
         
         if autofetch:
+            if args.has_key('retmax'):
+                total = args['retmax']
+            else:
+                total = results['total_found']
             results['articles'] = self.fetch_query_results(
                 results['query_key'], 
                 results['web_env'], 
-                results['total_found']
+                total
             )
         else:
             results['pmids'] = [e.text for e in xml_tree.findall('IdList/Id')]
             
         return results
     
-    def fetch_query_results(self, query_key, web_env, total_found):
+    def fetch_query_results(self, query_key, web_env, total_to_retrieve):
         results = []
         args = {
             'WebEnv': web_env,
             'query_key': query_key,
             'retstart': 0,
-            'retmax': 500
+            'retmax': total_to_retrieve if total_to_retrieve < 500 else 500
         }
 
-        while args['retstart'] < total_found:
+        while args['retstart'] < total_to_retrieve:
             print 'Fetching results %s - %s ...' % (args['retstart'], args['retstart']+args['retmax'])                
             raw = self._get(self.fetch_uri, args)            
             results += self.parse_fetch_result(raw)            

@@ -19,12 +19,12 @@ OR ("ut college of medicine"[Affiliation] AND "memphis"[Affiliation]) \
 OR ("ut college of medicine"[Affiliation] AND "tennessee"[Affiliation]) \
 OR ("utmem"[Affiliation] AND "tennessee"[Affiliation]) \
 OR ("uthsc"[Affiliation] AND "tennessee"[Affiliation])'
-print QUERY
-#pme = PubMedEntrez('test@test.edu')
-#articles = pme.search(QUERY)
+
+pme = PubMedEntrez('test@test.edu')
+results = pme.search(QUERY, True, **{'retmax': 10})
  
-# for a in articles:
-#     print a['pmid']
-#     print a['affiliations']
-#     print a['title']
-#     print '-'*100
+for a in results['articles']:
+    print a['pmid']
+    print a['affiliation']
+    print a['title']
+    print '-'*100
