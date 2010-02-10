@@ -14,7 +14,7 @@ Required: lxml
 __author__ = "Matt Grayson (mattgrayson@uthsc.edu)"
 __copyright__ = "Copyright 2009-2010, Matt Grayson"
 __license__ = "MIT"
-__version__ = "0.2"
+__version__ = "0.2.1"
 
 import httplib2
 import urllib
@@ -99,63 +99,63 @@ class PubMedEntrez(object):
         xml_tree = etree.XML(raw)
         articles_list = []
         for article in xml_tree.findall('PubmedArticle'):
-            art_dict = {}            
-            art_dict['pmid'] = article.findtext('.//PMID') if article.find('.//PMID') is not None else ''
-            art_dict['title'] = article.findtext('.//Article/ArticleTitle') if article.find('.//Article/ArticleTitle') is not None else ''
-            art_dict['authors'] = []
-            for auth in article.findall('.//Author[@ValidYN="Y"]'):
+            a = {'tree': xml_tree}            
+            a['pmid'] = article.findtext('MedlineCitation/PMID') if article.find('MedlineCitation/PMID') is not None else ''
+            a['title'] = article.findtext('MedlineCitation/Article/ArticleTitle') if article.find('MedlineCitation/Article/ArticleTitle') is not None else ''
+            a['authors'] = []
+            for auth in article.findall('MedlineCitation/Article/AuthorList/Author[@ValidYN="Y"]'):
                 auth_str = auth.findtext('LastName') if auth.find('LastName') is not None else ''
                 if auth.find('Initials') is not None:
                     auth_str = "%s %s" % (auth_str, auth.findtext('Initials'))
                 elif auth.find('ForeName') is not None:
                     auth_str = "%s %s" % (auth_str, auth.findtext('ForeName'))
-                art_dict['authors'].append(auth_str)
-            art_dict['affiliation'] = article.findtext('.//Article/Affiliation') if article.find('.//Article/Affiliation') is not None else ''  
+                a['authors'].append(auth_str)
+            a['affiliation'] = article.findtext('MedlineCitation/Article/Affiliation') if article.find('MedlineCitation/Article/Affiliation') is not None else ''  
             
-            art_dict['abstract'] = article.findtext('.//Article/Abstract/AbstractText') if article.find('.//Article/Abstract/AbstractText') is not None else ''  
-            art_dict['abstract_copyright'] = article.findtext('.//Article/Abstract/CopyrightInformation') if article.find('.//Article/Abstract/CopyrightInformation') is not None else ''  
+            a['abstract'] = article.findtext('MedlineCitation/Article/Abstract/AbstractText') if article.find('MedlineCitation/Article/Abstract/AbstractText') is not None else ''  
+            a['abstract_copyright'] = article.findtext('MedlineCitation/Article/Abstract/CopyrightInformation') if article.find('MedlineCitation/Article/Abstract/CopyrightInformation') is not None else ''  
             
-            art_dict['medline_status'] = article.find('MedlineCitation').get('Status') if article.find('MedlineCitation').get('Status') is not None else ''
-            art_dict['pubmed_status'] = article.findtext('.//PubmedData/PublicationStatus') if article.find('.//PubmedData/PublicationStatus') is not None else ''
+            a['medline_status'] = article.find('MedlineCitation').get('Status') if article.find('MedlineCitation').get('Status') is not None else ''
+            a['pubmed_status'] = article.findtext('PubmedData/PublicationStatus') if article.find('PubmedData/PublicationStatus') is not None else ''
             #for entrez_date in article.findall('.//PubmedData/History/PubMedPubDate[@PubStatus="entrez"]'):
             # art_dict['entrez_date'] = '...'
             
             # Journal details
             journal = {}
-            journal['name'] = article.findtext('.//Article/Journal/Title') if article.find('.//Article/Journal/Title') is not None else ''  
-            journal['name_abbrv'] = article.findtext('.//MedlineJournalInfo/MedlineTA') if article.find('.//MedlineJournalInfo/MedlineTA') is not None else ''  
-            journal['issn_online'] = article.findtext('.//Article/Journal/ISSN[@IssnType="Electronic"]') if article.find('.//Article/Journal/ISSN[@IssnType="Electronic"]') is not None else ''  
-            journal['issn_print'] = article.findtext('.//Article/Journal/ISSN[@IssnType="Print"]') if article.find('.//Article/Journal/ISSN[@IssnType="Print"]') is not None else ''                          
-            art_dict['journal'] = journal
+            journal['name_abbrv'] = article.findtext('MedlineCitation/MedlineJournalInfo/MedlineTA') if article.find('MedlineCitation/MedlineJournalInfo/MedlineTA') is not None else ''  
+            journal['issn_online'] = article.findtext('MedlineCitation/Article/Journal/ISSN[@IssnType="Electronic"]') if article.find('MedlineCitation/Article/Journal/ISSN[@IssnType="Electronic"]') is not None else ''  
+            journal['issn_print'] = article.findtext('MedlineCitation/Article/Journal/ISSN[@IssnType="Print"]') if article.find('MedlineCitation/Article/Journal/ISSN[@IssnType="Print"]') is not None else ''                          
+            a['journal'] = journal
             
             # Citation
             # -- basic details
             citation = {}
-            citation['pages'] = article.findtext('.//Article/Pagination/MedlinePgn') if article.find('.//Article/Pagination/MedlinePgn') is not None else ''  
-            citation['volume'] = article.findtext('.//Article/Journal/JournalIssue/Volume') if article.find('.//Article/Journal/JournalIssue/Volume') is not None else ''  
-            citation['issue'] = article.findtext('.//Article/Journal/JournalIssue/Issue') if article.find('.//Article/Journal/JournalIssue/Issue') is not None else ''  
+            citation['pages'] = article.findtext('MedlineCitation/Article/Pagination/MedlinePgn') if article.find('MedlineCitation/Article/Pagination/MedlinePgn') is not None else ''  
+            citation['volume'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/Volume') if article.find('MedlineCitation/Article/Journal/JournalIssue/Volume') is not None else ''  
+            citation['issue'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/Issue') if article.find('MedlineCitation/Article/Journal/JournalIssue/Issue') is not None else ''  
             # -- pub date
-            citation['date'] = article.findtext('.//Article/Journal/JournalIssue/PubDate/Year') if article.find('.//Article/Journal/JournalIssue/PubDate/Year') is not None else ''
-            citation['date'] = "%s %s" % (citation['date'], article.findtext('.//Article/Journal/JournalIssue/PubDate/Month')) if article.find('.//Article/Journal/JournalIssue/PubDate/Month') is not None else citation['date']
-            citation['date'] = "%s %s" % (citation['date'], article.findtext('.//Article/Journal/JournalIssue/PubDate/Day')) if article.find('.//Article/Journal/JournalIssue/PubDate/Day') is not None else citation['date']
-            art_dict['citation'] = citation
+            year = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Year') if article.find('MedlineCitation/Article/Journal/JournalIssue/PubDate/Year') is not None else ''
+            month = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Month') if article.find('MedlineCitation/Article/Journal/JournalIssue/PubDate/Month') is not None else ''
+            day = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Day') if article.find('MedlineCitation/Article/Journal/JournalIssue/PubDate/Day') is not None else ''
+            a['citation'] = "%s %s %s" % (year, month, day)
             
             # MeSH headings
-            art_dict['subjects'] = []
-            for subj in article.findall('.//MeshHeadingList/MeshHeading'):
-                desc_name = subj.findtext('DescriptorName') if subj.find('DescriptorName') is not None else ''
-                desc_is_major = True if article.find('DescriptorName[@MajorTopicYN="Y"]') is not None else False
-                art_dict['subjects'].append({'name': desc_name, 'is_major': desc_is_major})
+            a['subjects'] = []
+            for subj in article.findall('MedlineCitation/MeshHeadingList/MeshHeading'):
+                for desc in subj.findall('DescriptorName'):
+                    desc_name = desc.text
+                    desc_is_major = True if desc.get('MajorTopicYN') == 'Y' else False
+                    a['subjects'].append({'name': desc_name, 'is_major': desc_is_major})
                 
                 for qual in subj.findall('QualifierName'):
                     qual_name = qual.text
                     qual_is_major = True if qual.get('MajorTopicYN') == 'Y' else False
-                    art_dict['subjects'].append({'name': "%s/%s" % (desc_name,qual_name), 'is_major': qual_is_major})
+                    a['subjects'].append({'name': "%s/%s" % (desc_name,qual_name), 'is_major': qual_is_major})
             
             # Cache raw XML string
-            art_dict['raw'] = etree.tostring(article)
+            a['raw'] = etree.tostring(article)
             
-            articles_list.append(art_dict)
+            articles_list.append(a)
             
         return articles_list
     

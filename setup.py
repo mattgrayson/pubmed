@@ -23,6 +23,6 @@ Required: lxml
 To install:
 $ python setup.py install
 """,
-    version='0.2',
+    version='0.2.1',
     py_modules=['pubmed'],
 )
