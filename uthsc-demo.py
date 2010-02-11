@@ -27,4 +27,6 @@ for a in results['articles']:
     print a['pmid']
     print a['affiliation']
     print a['title']
+    print a['journal_name']
+    print a['citation']
     print '-'*100

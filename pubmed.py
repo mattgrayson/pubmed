@@ -14,7 +14,7 @@ Required: lxml
 __author__ = "Matt Grayson (mattgrayson@uthsc.edu)"
 __copyright__ = "Copyright 2009-2010, Matt Grayson"
 __license__ = "MIT"
-__version__ = "0.2.1"
+__version__ = "0.3"
 
 import httplib2
 import urllib
@@ -99,7 +99,7 @@ class PubMedEntrez(object):
         xml_tree = etree.XML(raw)
         articles_list = []
         for article in xml_tree.findall('PubmedArticle'):
-            a = {'tree': xml_tree}            
+            a = {'raw': etree.tostring(article)}            
             a['pmid'] = article.findtext('MedlineCitation/PMID') if article.find('MedlineCitation/PMID') is not None else ''
             a['title'] = article.findtext('MedlineCitation/Article/ArticleTitle') if article.find('MedlineCitation/Article/ArticleTitle') is not None else ''
             a['authors'] = []
@@ -121,23 +121,27 @@ class PubMedEntrez(object):
             # art_dict['entrez_date'] = '...'
             
             # Journal details
-            journal = {}
-            journal['name_abbrv'] = article.findtext('MedlineCitation/MedlineJournalInfo/MedlineTA') if article.find('MedlineCitation/MedlineJournalInfo/MedlineTA') is not None else ''  
-            journal['issn_online'] = article.findtext('MedlineCitation/Article/Journal/ISSN[@IssnType="Electronic"]') if article.find('MedlineCitation/Article/Journal/ISSN[@IssnType="Electronic"]') is not None else ''  
-            journal['issn_print'] = article.findtext('MedlineCitation/Article/Journal/ISSN[@IssnType="Print"]') if article.find('MedlineCitation/Article/Journal/ISSN[@IssnType="Print"]') is not None else ''                          
-            a['journal'] = journal
+            a['journal_name'] = article.findtext('MedlineCitation/Article/Journal/Title') if article.find('MedlineCitation/Article/Journal/Title') is not None else ''              
+            a['journal_name_abbrv'] = article.findtext('MedlineCitation/MedlineJournalInfo/MedlineTA') if article.find('MedlineCitation/MedlineJournalInfo/MedlineTA') is not None else ''  
+            a['journal_issn_online'] = article.findtext('MedlineCitation/Article/Journal/ISSN[@IssnType="Electronic"]') if article.find('MedlineCitation/Article/Journal/ISSN[@IssnType="Electronic"]') is not None else ''  
+            a['journal_issn_print'] = article.findtext('MedlineCitation/Article/Journal/ISSN[@IssnType="Print"]') if article.find('MedlineCitation/Article/Journal/ISSN[@IssnType="Print"]') is not None else ''                          
             
             # Citation
             # -- basic details
-            citation = {}
-            citation['pages'] = article.findtext('MedlineCitation/Article/Pagination/MedlinePgn') if article.find('MedlineCitation/Article/Pagination/MedlinePgn') is not None else ''  
-            citation['volume'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/Volume') if article.find('MedlineCitation/Article/Journal/JournalIssue/Volume') is not None else ''  
-            citation['issue'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/Issue') if article.find('MedlineCitation/Article/Journal/JournalIssue/Issue') is not None else ''  
+            a['pages'] = article.findtext('MedlineCitation/Article/Pagination/MedlinePgn') if article.find('MedlineCitation/Article/Pagination/MedlinePgn') is not None else ''
+            a['volume'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/Volume') if article.find('MedlineCitation/Article/Journal/JournalIssue/Volume') is not None else ''  
+            a['issue'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/Issue') if article.find('MedlineCitation/Article/Journal/JournalIssue/Issue') is not None else ''
+            a['volume_issue'] = "%s(%s)" % (a['volume'],a['issue']) if a['issue'] != '' else a['volume']
             # -- pub date
-            year = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Year') if article.find('MedlineCitation/Article/Journal/JournalIssue/PubDate/Year') is not None else ''
-            month = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Month') if article.find('MedlineCitation/Article/Journal/JournalIssue/PubDate/Month') is not None else ''
-            day = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Day') if article.find('MedlineCitation/Article/Journal/JournalIssue/PubDate/Day') is not None else ''
-            a['citation'] = "%s %s %s" % (year, month, day)
+            a['pubdate_year'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Year') if article.find('MedlineCitation/Article/Journal/JournalIssue/PubDate/Year') is not None else ''
+            a['pubdate_month'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Month') if article.find('MedlineCitation/Article/Journal/JournalIssue/PubDate/Month') is not None else ''
+            a['pubdate_day'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Day') if article.find('MedlineCitation/Article/Journal/JournalIssue/PubDate/Day') is not None else ''
+            a['pubdate'] = ("%s %s %s" % (a['pubdate_year'], a['pubdate_month'], a['pubdate_day'])).strip()
+            # -- derived citation
+            a['citation'] = "%s" % (a['journal_name_abbrv'],) if a['journal_name_abbrv'] != '' else a['journal_name']
+            a['citation'] = "%s. %s" % (a['citation'], a['pubdate']) if a['pubdate'] != '' else a['citation']
+            a['citation'] = "%s; %s" % (a['citation'], a['volume_issue']) if a['volume_issue'] != '' else a['citation']
+            a['citation'] = "%s; %s." % (a['citation'], a['pages']) if a['pages'] != ('' or None) else "%s." % (a['citation'],)
             
             # MeSH headings
             a['subjects'] = []
@@ -145,16 +149,13 @@ class PubMedEntrez(object):
                 for desc in subj.findall('DescriptorName'):
                     desc_name = desc.text
                     desc_is_major = True if desc.get('MajorTopicYN') == 'Y' else False
-                    a['subjects'].append({'name': desc_name, 'is_major': desc_is_major})
+                    a['subjects'].append({'name': desc_name, 'qualifier': '', 'is_major': desc_is_major})
                 
                 for qual in subj.findall('QualifierName'):
                     qual_name = qual.text
                     qual_is_major = True if qual.get('MajorTopicYN') == 'Y' else False
-                    a['subjects'].append({'name': "%s/%s" % (desc_name,qual_name), 'is_major': qual_is_major})
-            
-            # Cache raw XML string
-            a['raw'] = etree.tostring(article)
-            
+                    a['subjects'].append({'name': desc_name, 'qualifier': qual_name, 'is_major': qual_is_major})
+                        
             articles_list.append(a)
             
         return articles_list
