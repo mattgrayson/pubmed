@@ -20,13 +20,22 @@ OR ("ut college of medicine"[Affiliation] AND "tennessee"[Affiliation]) \
 OR ("utmem"[Affiliation] AND "tennessee"[Affiliation]) \
 OR ("uthsc"[Affiliation] AND "tennessee"[Affiliation])'
 
-pme = PubMedEntrez('test@test.edu')
-results = pme.search(QUERY, True, **{'retmax': 10})
+if __name__ == "__main__":
+    import sys
+    args = sys.argv[1:]
+    pme = PubMedEntrez('test@test.edu')
+
+    if len(args) == 1:
+        results = pme.search("%s[uid]" % (args[0],), True, **{'retmax': 1})
+    else:
+        results = pme.search(QUERY, True, **{'retmax': 50}) 
  
-for a in results['articles']:
-    print a['pmid']
-    print a['affiliation']
-    print a['title']
-    print a['journal_name']
-    print a['citation']
-    print '-'*100
+    for a in results['articles']:
+        print a['pmid']
+        print a['affiliation']
+        print a['title']
+        print a['journal']['name']
+        print a['citation']
+        print a['pubdate']
+        print a['authors']
+        print '-'*100

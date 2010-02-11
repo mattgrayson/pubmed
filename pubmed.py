@@ -9,22 +9,29 @@ Entrez Programming Utilities <http://eutils.ncbi.nlm.nih.gov/>.
 Required: Python 2.5 or later
 Required: httplib2
 Required: lxml
+Required: dateutil
 """
 
 __author__ = "Matt Grayson (mattgrayson@uthsc.edu)"
 __copyright__ = "Copyright 2009-2010, Matt Grayson"
 __license__ = "MIT"
-__version__ = "0.3"
+__version__ = "0.3.1"
+
 
 import httplib2
+import re
 import urllib
+from datetime import datetime
 from lxml import etree
+from dateutil import parser as dateparser
 
 class PubMedEntrez(object):
     """
     """    
     ENTREZ_BASE_URI = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
-
+    DEFAULT_DATE = datetime(datetime.now().year,1,1)
+    MEDLINEDATE_YEAR = re.compile(r'^\d{4}')
+    
     def __init__(self, email):
         self.search_results = ''
         self.last_query = ''
@@ -99,12 +106,16 @@ class PubMedEntrez(object):
         xml_tree = etree.XML(raw)
         articles_list = []
         for article in xml_tree.findall('PubmedArticle'):
-            a = {'raw': etree.tostring(article)}            
+            a = {'raw_xml': etree.tostring(article)}            
             a['pmid'] = article.findtext('MedlineCitation/PMID') if article.find('MedlineCitation/PMID') is not None else ''
             a['title'] = article.findtext('MedlineCitation/Article/ArticleTitle') if article.find('MedlineCitation/Article/ArticleTitle') is not None else ''
             a['authors'] = []
             for auth in article.findall('MedlineCitation/Article/AuthorList/Author[@ValidYN="Y"]'):
-                auth_str = auth.findtext('LastName') if auth.find('LastName') is not None else ''
+                if auth.find('LastName') is not None:
+                    auth_str = auth.findtext('LastName')
+                else:
+                    continue
+                
                 if auth.find('Initials') is not None:
                     auth_str = "%s %s" % (auth_str, auth.findtext('Initials'))
                 elif auth.find('ForeName') is not None:
@@ -121,25 +132,48 @@ class PubMedEntrez(object):
             # art_dict['entrez_date'] = '...'
             
             # Journal details
-            a['journal_name'] = article.findtext('MedlineCitation/Article/Journal/Title') if article.find('MedlineCitation/Article/Journal/Title') is not None else ''              
-            a['journal_name_abbrv'] = article.findtext('MedlineCitation/MedlineJournalInfo/MedlineTA') if article.find('MedlineCitation/MedlineJournalInfo/MedlineTA') is not None else ''  
-            a['journal_issn_online'] = article.findtext('MedlineCitation/Article/Journal/ISSN[@IssnType="Electronic"]') if article.find('MedlineCitation/Article/Journal/ISSN[@IssnType="Electronic"]') is not None else ''  
-            a['journal_issn_print'] = article.findtext('MedlineCitation/Article/Journal/ISSN[@IssnType="Print"]') if article.find('MedlineCitation/Article/Journal/ISSN[@IssnType="Print"]') is not None else ''                          
+            a['journal'] = {}
+            a['journal']['name'] = article.findtext('MedlineCitation/Article/Journal/Title') if article.find('MedlineCitation/Article/Journal/Title') is not None else ''              
+            a['journal']['name_abbreviated'] = article.findtext('MedlineCitation/MedlineJournalInfo/MedlineTA') if article.find('MedlineCitation/MedlineJournalInfo/MedlineTA') is not None else ''  
+            a['journal']['issn_online'] = article.findtext('MedlineCitation/Article/Journal/ISSN[@IssnType="Electronic"]') if article.findtext('MedlineCitation/Article/Journal/ISSN[@IssnType="Electronic"]') is not None else ''  
+            a['journal']['issn_print'] = article.findtext('MedlineCitation/Article/Journal/ISSN[@IssnType="Print"]') if article.findtext('MedlineCitation/Article/Journal/ISSN[@IssnType="Print"]') is not None else ''                          
+            a['journal']['nlm_unique_id'] = article.findtext('MedlineCitation/MedlineJournalInfo/NlmUniqueID') if article.find('MedlineCitation/MedlineJournalInfo/NlmUniqueID') is not None else ''              
             
             # Citation
             # -- basic details
-            a['pages'] = article.findtext('MedlineCitation/Article/Pagination/MedlinePgn') if article.find('MedlineCitation/Article/Pagination/MedlinePgn') is not None else ''
+            a['pages'] = article.findtext('MedlineCitation/Article/Pagination/MedlinePgn') if article.findtext('MedlineCitation/Article/Pagination/MedlinePgn') is not None else ''
             a['volume'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/Volume') if article.find('MedlineCitation/Article/Journal/JournalIssue/Volume') is not None else ''  
             a['issue'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/Issue') if article.find('MedlineCitation/Article/Journal/JournalIssue/Issue') is not None else ''
             a['volume_issue'] = "%s(%s)" % (a['volume'],a['issue']) if a['issue'] != '' else a['volume']
-            # -- pub date
+            # -- publicate date
             a['pubdate_year'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Year') if article.find('MedlineCitation/Article/Journal/JournalIssue/PubDate/Year') is not None else ''
             a['pubdate_month'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Month') if article.find('MedlineCitation/Article/Journal/JournalIssue/PubDate/Month') is not None else ''
-            a['pubdate_day'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Day') if article.find('MedlineCitation/Article/Journal/JournalIssue/PubDate/Day') is not None else ''
-            a['pubdate'] = ("%s %s %s" % (a['pubdate_year'], a['pubdate_month'], a['pubdate_day'])).strip()
+            a['pubdate_day'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Day') if article.find('MedlineCitation/Article/Journal/JournalIssue/PubDate/Day') is not None else ''            
+            # -- medline date            
+            a['medline_date'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/MedlineDate') if article.find('MedlineCitation/Article/Journal/JournalIssue/PubDate/MedlineDate') is not None else ''
+            
+            # Create date string
+            if a['pubdate_month'] != '':
+                a['pubdate_str'] = ("%s %s %s" % (a['pubdate_year'], a['pubdate_month'], a['pubdate_day'])).strip()
+            else:
+                # Use pubmed date as pubdate source; MedlineDate not parsable enough to be reliable
+                pubmed_date_year = article.findtext('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Year') if article.find('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Year') is not None else ''
+                pubmed_date_month = article.findtext('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Month') if article.find('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Month') is not None else ''
+                pubmed_date_day = article.findtext('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Day') if article.find('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Day') is not None else ''
+                a['pubdate_str'] = ("%s %s %s" % (pubmed_date_year, pubmed_date_month, pubmed_date_day))
+            # Parse datetime obj from date string
+            try:                
+                a['pubdate'] = dateparser.parse(a['pubdate_str'], fuzzy=True, yearfirst=True, default=self.DEFAULT_DATE)
+            except ValueError:
+                year = self.MEDLINEDATE_YEAR.search(a['pubdate_str'])
+                if year is not None:
+                    a['pubdate'] = datetime(int(year.group()),1,1)
+                else:
+                    a['pubdate'] = self.DEFAULT_DATE
+            
+            
             # -- derived citation
-            a['citation'] = "%s" % (a['journal_name_abbrv'],) if a['journal_name_abbrv'] != '' else a['journal_name']
-            a['citation'] = "%s. %s" % (a['citation'], a['pubdate']) if a['pubdate'] != '' else a['citation']
+            a['citation'] = a['medline_date'] if a['medline_date'] != '' else a['pubdate'].strftime("%Y %b")
             a['citation'] = "%s; %s" % (a['citation'], a['volume_issue']) if a['volume_issue'] != '' else a['citation']
             a['citation'] = "%s; %s." % (a['citation'], a['pages']) if a['pages'] != ('' or None) else "%s." % (a['citation'],)
             

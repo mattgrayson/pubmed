@@ -18,11 +18,12 @@ Entrez Programming Utilities <http://eutils.ncbi.nlm.nih.gov/>.
 Required: Python 2.5 or later
 Required: httplib2
 Required: lxml
+Required: dateutil
 -----
 
 To install:
 $ python setup.py install
 """,
-    version='0.3',
+    version='0.3.1',
     py_modules=['pubmed'],
 )
