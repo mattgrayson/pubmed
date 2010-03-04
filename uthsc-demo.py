@@ -28,9 +28,10 @@ if __name__ == "__main__":
     if len(args) == 1:
         results = pme.search("%s[uid]" % (args[0],), True, **{'retmax': 1})
     else:
-        results = pme.search(QUERY, True, **{'retmax': 50}) 
+        results = pme.search(QUERY, True, **{'retmax': 5}) 
  
     for a in results['articles']:
+        #print a
         print a['pmid']
         print a['affiliation']
         print a['title']

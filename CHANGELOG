@@ -1,0 +1,6 @@
+== 2010-03-04 ==
+
+    * Bumped version to 0.3.2
+    * Added CHANGELOG
+    * Improved pubdate detection; now tries to parse medlinedate for 
+      year/month/season.

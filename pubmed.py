@@ -15,7 +15,7 @@ Required: dateutil
 __author__ = "Matt Grayson (mattgrayson@uthsc.edu)"
 __copyright__ = "Copyright 2009-2010, Matt Grayson"
 __license__ = "MIT"
-__version__ = "0.3.1"
+__version__ = "0.3.2"
 
 
 import httplib2
@@ -30,6 +30,8 @@ class PubMedEntrez(object):
     """    
     ENTREZ_BASE_URI = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
     DEFAULT_DATE = datetime(datetime.now().year,1,1)
+    MEDLINEDATE_YEAR_MONTH = re.compile(r'^(?P<year>\d{4}) (?P<month>\w{3})[\s-]')
+    MEDLINEDATE_YEAR_SEASON = re.compile(r'^(?P<year>\d{4}) (?P<season>\w+)[\s-]')
     MEDLINEDATE_YEAR = re.compile(r'^\d{4}')
     
     def __init__(self, email):
@@ -110,7 +112,7 @@ class PubMedEntrez(object):
             a['pmid'] = article.findtext('MedlineCitation/PMID') if article.findtext('MedlineCitation/PMID') is not None else ''
             a['title'] = article.findtext('MedlineCitation/Article/ArticleTitle') if article.findtext('MedlineCitation/Article/ArticleTitle') is not None else ''
             a['authors'] = []
-            for auth in article.findall('MedlineCitation/Article/AuthorList/Author[@ValidYN="Y"]'):
+            for auth in article.findall('MedlineCitation/Article/AuthorList/Author'):
                 if auth.find('LastName') is not None:
                     auth_str = auth.findtext('LastName')
                 else:
@@ -148,19 +150,57 @@ class PubMedEntrez(object):
             # -- publicate date
             a['pubdate_year'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Year') if article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Year') is not None else ''
             a['pubdate_month'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Month') if article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Month') is not None else ''
-            a['pubdate_day'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Day') if article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Day') is not None else ''            
+            a['pubdate_day'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Day') if article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Day') is not None else ''
+            a['pubdate_season'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Season') if article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/Season') is not None else ''                        
             # -- medline date            
             a['medline_date'] = article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/MedlineDate') if article.findtext('MedlineCitation/Article/Journal/JournalIssue/PubDate/MedlineDate') is not None else ''
-            
+
             # Create date string
+            def season_to_month(season):
+                season = season.lower()
+                if season == 'spring':
+                    month = 'Mar'
+                elif season == 'summer':
+                    month = 'Jun'
+                elif season == 'fall':
+                    month = 'Sep'
+                elif season == 'winter':
+                    month = 'Dec'
+                else:
+                    month = 'Jan'
+                return month
+            
             if a['pubdate_month'] != '':
                 a['pubdate_str'] = ("%s %s %s" % (a['pubdate_year'], a['pubdate_month'], a['pubdate_day'])).strip()
+            elif a['pubdate_season'] != '':
+                a['pubdate_month'] = season_to_month(a['pubdate_season'])
+                a['pubdate_day'] = 1
+                a['pubdate_str'] = ("%s %s %s" % (a['pubdate_year'], a['pubdate_month'], a['pubdate_day'])).strip()
             else:
-                # Use pubmed date as pubdate source; MedlineDate not parsable enough to be reliable
-                pubmed_date_year = article.findtext('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Year') if article.findtext('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Year') is not None else ''
-                pubmed_date_month = article.findtext('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Month') if article.findtext('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Month') is not None else ''
-                pubmed_date_day = article.findtext('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Day') if article.findtext('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Day') is not None else ''
-                a['pubdate_str'] = ("%s %s %s" % (pubmed_date_year, pubmed_date_month, pubmed_date_day))
+                medline_year_month = self.MEDLINEDATE_YEAR_MONTH.search(a['medline_date'])
+                medline_year_season = self.MEDLINEDATE_YEAR_SEASON.search(a['medline_date'])
+                if medline_year_month != None:
+                    dates = medline_year_month.groupdict()
+                    a['pubdate_year'] = dates['year'] if a['pubdate_year'] == '' else a['pubdate_year']
+                    a['pubdate_month'] = dates['month']
+                    a['pubdate_day'] = 1
+                    a['pubdate_str'] = ("%s %s %s" % (a['pubdate_year'], a['pubdate_month'], a['pubdate_day'])).strip()
+                elif medline_year_season != None:
+                    dates = medline_year_season.groupdict()                  
+                    a['pubdate_year'] = dates['year'] if a['pubdate_year'] == '' else a['pubdate_year']
+                    a['pubdate_month'] = season_to_month(dates['season'])
+                    a['pubdate_day'] = 1
+                    a['pubdate_str'] = ("%s %s %s" % (a['pubdate_year'], a['pubdate_month'], a['pubdate_day'])).strip()
+                else:
+                    # Pubmed date only used as a last resort
+                    pubmed_date_year = article.findtext('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Year') if article.findtext('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Year') is not None else ''
+                    pubmed_date_month = article.findtext('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Month') if article.findtext('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Month') is not None else ''
+                    pubmed_date_day = article.findtext('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Day') if article.findtext('PubmedData/History/PubMedPubDate[@PubStatus="pubmed"]/Day') is not None else ''
+                    a['pubdate_year'] = pubmed_date_year
+                    a['pubdate_month'] = pubmed_date_month
+                    a['pubdate_day'] = pubmed_date_day
+                    a['pubdate_str'] = ("%s %s %s" % (pubmed_date_year, pubmed_date_month, pubmed_date_day))
+
             # Parse datetime obj from date string
             try:                
                 a['pubdate'] = dateparser.parse(a['pubdate_str'], fuzzy=True, yearfirst=True, default=self.DEFAULT_DATE)
@@ -173,9 +213,10 @@ class PubMedEntrez(object):
             
             
             # -- derived citation
-            a['citation'] = a['medline_date'] if a['medline_date'] != '' else a['pubdate'].strftime("%Y %b")
+            a['citation'] = a['medline_date'] if a['medline_date'] != '' else a['pubdate'].strftime("%Y")
+            a['citation'] = "%s %s" % (a['citation'], a['pubdate_season']) if a['pubdate_season'] != '' else a['pubdate'].strftime("%b")            
             a['citation'] = "%s; %s" % (a['citation'], a['volume_issue']) if a['volume_issue'] != '' else a['citation']
-            a['citation'] = "%s; %s." % (a['citation'], a['pages']) if a['pages'] != ('' or None) else "%s." % (a['citation'],)
+            a['citation'] = "%s: %s." % (a['citation'], a['pages']) if a['pages'] != ('' or None) else "%s." % (a['citation'],)
             
             # MeSH headings
             a['subjects'] = []
