@@ -3,8 +3,10 @@
 """
 pubmed.py
 
-Simple utility for searching and retrieving articles from PubMed via the 
-Entrez Programming Utilities <http://eutils.ncbi.nlm.nih.gov/>.
+Simple interface for searching and retrieving articles from PubMed via the 
+Entrez Programming Utilities <http://eutils.ncbi.nlm.nih.gov/>. It does not 
+provide access to all of the Entrez utilities and only parses a subset of the 
+elements included in PubmedArticle. There's probably a better way to do this ...
 
 Required: Python 2.5 or later
 Required: httplib2
@@ -15,7 +17,7 @@ Required: dateutil
 __author__ = "Matt Grayson (mattgrayson@uthsc.edu)"
 __copyright__ = "Copyright 2009-2010, Matt Grayson"
 __license__ = "MIT"
-__version__ = "0.3.2"
+__version__ = "0.3.3"
 
 
 import httplib2
@@ -38,8 +40,8 @@ class PubMedEntrez(object):
         self.search_results = ''
         self.last_query = ''
         self.email_address = email
-        self.search_uri = '%s/esearch.fcgi?db=pubmed&retmode=xml&usehistory=y&email=%s' % (self.ENTREZ_BASE_URI, email)
-        self.fetch_uri = '%s/efetch.fcgi?db=pubmed&retmode=xml&rettype=full&email=%s' % (self.ENTREZ_BASE_URI, email)
+        self.search_uri = '%s/esearch.fcgi?db=pubmed&retmode=xml&usehistory=y&tool=pubmedpy&email=%s' % (self.ENTREZ_BASE_URI, email)
+        self.fetch_uri = '%s/efetch.fcgi?db=pubmed&retmode=xml&rettype=full&tool=pubmedpy&email=%s' % (self.ENTREZ_BASE_URI, email)
         self.conn = httplib2.Http()        
         
     def _get(self, url, params=None):
@@ -214,7 +216,7 @@ class PubMedEntrez(object):
             
             # -- derived citation
             a['citation'] = a['medline_date'] if a['medline_date'] != '' else a['pubdate'].strftime("%Y")
-            a['citation'] = "%s %s" % (a['citation'], a['pubdate_season']) if a['pubdate_season'] != '' else a['pubdate'].strftime("%b")            
+            a['citation'] = "%s %s" % (a['citation'], a['pubdate_season']) if a['pubdate_season'] != '' else "%s %s" % (a['citation'], a['pubdate'].strftime("%b"))            
             a['citation'] = "%s; %s" % (a['citation'], a['volume_issue']) if a['volume_issue'] != '' else a['citation']
             a['citation'] = "%s: %s." % (a['citation'], a['pages']) if a['pages'] != ('' or None) else "%s." % (a['citation'],)
             
